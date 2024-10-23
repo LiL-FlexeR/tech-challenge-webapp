@@ -1,6 +1,7 @@
-import { routes } from "@app/constants/routes";
 import { FC } from "react";
 import { Route, Routes } from "react-router-dom";
+
+import { routes } from "@app/constants/routes";
 
 const AppRoutes: FC = () => {
   return (
