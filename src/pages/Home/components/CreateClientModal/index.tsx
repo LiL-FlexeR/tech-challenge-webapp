@@ -21,6 +21,8 @@ import Dialog from "@app/components/Dialog";
 
 import { useCreateClientOrdersMutation } from "@app/api/hooks/mutations/useCreateClientOrdersMutation";
 
+import Styled from "./styled";
+
 type TCreateClientModalProps = {
   open: boolean;
   onClose: () => void;
@@ -132,7 +134,7 @@ const CreateClientModal: FC<TCreateClientModalProps> = ({ onClose, open }) => {
 
   return (
     <Dialog onClose={onClose} open={open} title="Create client">
-      <form
+      <Styled.Form
         style={{ display: "flex", flexDirection: "column", gap: "12px" }}
         onSubmit={onFormSubmit}
       >
@@ -175,7 +177,7 @@ const CreateClientModal: FC<TCreateClientModalProps> = ({ onClose, open }) => {
           )}
         </FormControl>
         <Button type="submit">Create</Button>
-      </form>
+      </Styled.Form>
     </Dialog>
   );
 };
