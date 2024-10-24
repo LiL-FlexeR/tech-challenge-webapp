@@ -1,3 +1,4 @@
+import { useSnackbar } from "notistack";
 import {
   ChangeEvent,
   FC,
@@ -17,6 +18,8 @@ import {
 } from "@mui/material";
 
 import Dialog from "@app/components/Dialog";
+
+import { useCreateClientOrdersMutation } from "@app/api/hooks/mutations/useCreateClientOrdersMutation";
 
 type TCreateClientModalProps = {
   open: boolean;
@@ -41,6 +44,21 @@ type TCreateClientForm = {
 const filter = createFilterOptions<string>();
 
 const CreateClientModal: FC<TCreateClientModalProps> = ({ onClose, open }) => {
+  const { enqueueSnackbar } = useSnackbar();
+
+  const { mutate } = useCreateClientOrdersMutation({
+    onSuccess: () => {
+      enqueueSnackbar("Success!", {
+        variant: "success",
+      });
+      onClose();
+    },
+    onError: () =>
+      enqueueSnackbar("Something went wrong!", {
+        variant: "error",
+      }),
+  });
+
   const [form, setForm] = useState<TCreateClientForm>({
     state: {
       name: "",
@@ -104,7 +122,10 @@ const CreateClientModal: FC<TCreateClientModalProps> = ({ onClose, open }) => {
       error: null,
     }));
 
-    console.log("There");
+    mutate({
+      userName: form.state.name,
+      orderNames: form.state.orders,
+    });
   };
 
   return (
