@@ -43,8 +43,18 @@ type TCreateClientForm = {
 
 const filter = createFilterOptions<string>();
 
+const initialForm = {
+  state: {
+    name: "",
+    orders: [],
+  },
+  error: null,
+};
+
 const CreateClientModal: FC<TCreateClientModalProps> = ({ onClose, open }) => {
   const { enqueueSnackbar } = useSnackbar();
+
+  const [form, setForm] = useState<TCreateClientForm>(initialForm);
 
   const { mutate } = useCreateClientOrdersMutation({
     onSuccess: () => {
@@ -57,14 +67,6 @@ const CreateClientModal: FC<TCreateClientModalProps> = ({ onClose, open }) => {
       enqueueSnackbar("Something went wrong!", {
         variant: "error",
       }),
-  });
-
-  const [form, setForm] = useState<TCreateClientForm>({
-    state: {
-      name: "",
-      orders: [],
-    },
-    error: null,
   });
 
   const onNameChange = useCallback((evt: ChangeEvent<HTMLInputElement>) => {
